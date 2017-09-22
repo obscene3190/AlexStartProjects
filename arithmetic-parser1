@@ -1,5 +1,5 @@
 using namespace std;
-
+#include <iostream>
 int main() { 
 int a1,a2,res;
 char sign, sign1; 
@@ -11,8 +11,8 @@ if (sign == '+') {
   res = a1 + a2; } 
 else if (sign == '-') { 
   res = a1-a2; } 
-else if (sign == '') { 
-  res = a1a2; }
+else if (sign == '*') { 
+  res = a1*a2; }
 else if (sign == '/') {
   res = a1/a2; if (a2 == 0) {
   cout<<"Error"; } }
