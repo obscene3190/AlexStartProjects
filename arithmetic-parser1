@@ -3,7 +3,7 @@ using namespace std;
 
 int main() { 
 int a1,a2,res;
-char sign, sign1; 
+char sign, sign1=0; 
 cin>>a1>>sign; 
 if (sign=='>' || sign=='<') { 
   cin>>sign1;
