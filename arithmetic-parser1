@@ -7,8 +7,8 @@ char sign, sign1;
 cin>>a1>>sign; 
 if (sign=='>' || sign=='<') { 
   cin>>sign1;
-  cin>>b;}
-else cin>>b;
+  cin>>a2;}
+else cin>>a2;
 if (sign == '+') { 
   res = a1 + a2; } 
 else if (sign == '-') { 
