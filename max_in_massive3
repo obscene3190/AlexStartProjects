@@ -1,0 +1,37 @@
+#include <iostream>
+#include <sstream>
+using namespace std ;
+
+bool massive(int array[10])
+{
+    string string; 
+    getline( cin, string );
+    istringstream stream( string );
+    bool result = true;
+    for( int i = 0; i < 10; ++i ) {
+        if ( !(stream >> array[ i ]) ) {
+           result = false;
+           break;
+        }
+    } 
+    return result;
+}
+
+int main()
+{
+    int num1[10];
+    int num2[10];
+   
+    if( massive(num1) && massive(num2) ) {
+        int max=num1[0]+num2[0];
+        for (int i = 0; i<10; i++) {
+            if (num1[i] + num2[i] > max) max = num1[i] + num2[i];
+            if (num1[i] + num2[i-1] > max) max = num1[i] + num2[i-1];
+            if (num1[i] + num2[i+1] > max) max = num1[i] + num2[i+1];
+        }
+        cout<<max;
+   }
+   else {
+       cout<<"An error has occured while reading numbers from line";
+   }
+}
