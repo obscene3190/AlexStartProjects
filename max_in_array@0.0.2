@@ -24,11 +24,10 @@ int main() {
             break;
         }
     }
+    bool failure2 = false;
     if (!failure) {
         for (string string; getline(cin, string);) {
-
             istringstream stream(string);
-            bool failure2 = false;
             for (int i = 0; i < 10; ++i) {
                 if (!(stream >> numbers2[i])) {
                     failure2 = true;
@@ -47,5 +46,5 @@ int main() {
             }
         }
     }
-    if (!failure) {cout<<max1+max2;}
+    if (!failure && !failure2) {cout<<max1+max2;}
 }
