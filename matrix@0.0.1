@@ -4,18 +4,17 @@ using namespace std;
 
 bool matrix(int matrix[3][3])
 {
-	int element;
 	bool result = true;
-	for (int i = 0; i < 3; ++i) {
-		for (int j = 0; j < 3; ++i) {
-			cin >> element;
-			istringstream stream(element);
+	for (int i = 0; i<3; i++) {
+		string string;
+		getline(cin, string);
+		istringstream stream(string);
+		for (int j = 0; j < 3; ++j) {
 			if (!(stream >> matrix[i][j])) {
 				result = false;
 				break;
 			}
 		}
-		cout << endl;
 	}
 	return result;
 }
@@ -27,7 +26,7 @@ int main()
 	char znak;
 	if ( matrix(matrix1) ) {
 		cin >> znak;
-		if ( matrix(matrix2 )) {
+		if ( matrix(matrix2)) {
 			if (znak == '+') {
 				for (int i = 0; i < 3; i++) {
 					for (int j = 0; j < 3; j++) {
@@ -53,17 +52,17 @@ int main()
 				}
 			}
 			else {
-				cout << "An error has occured while reading sign";
+				cout << "An error has occured while reading input data";
 				return -1;
 			}
 		}
 		else {
-			cout << "An error has occured while reading numbers from line";
+			cout << "An error has occured while reading input data";
 			return -1;
 		}
 	}
 	else {
-		cout << "An error has occured while reading numbers from line";
+		cout << "An error has occured while reading input data";
 	}
 }
 
