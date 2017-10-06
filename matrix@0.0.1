@@ -63,7 +63,7 @@ int main()
                     for (int j = 0; j < 3; j++) {
                         int result=0;
                         for(int k=0; k<3;k++)
-                            result+=matrix1[i][j] * matrix2[j][i];
+                            result+=matrix1[i][k] * matrix2[k][j];
                         cout << result << " ";
                     }
                     cout << endl;
