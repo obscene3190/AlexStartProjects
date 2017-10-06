@@ -3,30 +3,31 @@
 using namespace std;
 
 int main() {
-    int a, b;
+    float a, b, res;
     char znak;
-    cin>>a;
-    cin>>znak;
-    while(znak ) {
-
-        cin>>b;
-        if(znak == '+'){
-            a = a+b;
+    bool stop=false;
+    cin >> a;
+    cin >> znak;
+    while (!stop) {
+        if (znak == '+' || znak == '-' || znak == '/' || znak == '*') {
+            cin >> b;
+            if (znak == '+') {
+                a = a + b;
+            } else if (znak == '-') {
+                a = a - b;
+            } else if (znak == '*') {
+                a = a * b;
+            } else if (znak == '/')
+                if (b == 0) {
+                    cout << "Error occured";
+                    return 0;
+                } else a = a / b;
+            cin >> znak;
         }
-
-        else if(znak == '-'){
-            a = a-b;
-        }
-
-        else if(znak == '*'){
-            a = a*b;
-        }
-
-        else if(znak == '/') if (b==0) {cout << "Hui sosi"; return 0;} else a = a/b;
+        else {
+            stop = true;
+            break;
+            }
     }
-
-    system("pause");
-
-    return 0;
-    }
+    cout<<a;
 }
