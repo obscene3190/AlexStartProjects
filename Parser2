@@ -18,7 +18,7 @@ int main()
 		if(znak=='-') itog = itog-middle;
 		if(znak=='*') itog = itog*middle;
 		if(znak=='/') {
-			if (middle == 0) cout>>"Error";
+			if (middle == 0) cout<<"Error";
 			else itog = itog/middle;
 			}
 	}
