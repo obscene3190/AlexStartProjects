@@ -1,0 +1,23 @@
+#include<iostream>
+#include<sstream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+	string string;
+	int itog, middle;
+	char znak;
+	getline(cin,string);
+	istringstream stream(string);
+	stream>>itog;
+	while(stream>>znak) {
+		stream>>middle;
+		if(znak=='+') itog = itog+middle;
+		if(znak=='-') itog = itog-middle;
+		if(znak=='*') itog = itog*middle;
+		if(znak=='/') itog = itog/middle;
+	}
+	cout<<itog;
+}
