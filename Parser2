@@ -15,12 +15,13 @@ int main()
 	while(stream>>znak) {
 		stream>>middle;
 		if(znak=='+') itog = itog+middle;
-		if(znak=='-') itog = itog-middle;
-		if(znak=='*') itog = itog*middle;
-		if(znak=='/') {
+	        else if(znak=='-') itog = itog-middle;
+	        else if(znak=='*') itog = itog*middle;
+	        else if(znak=='/') {
 			if (middle == 0) cout<<"Error";
 			else itog = itog/middle;
 			}
+                else cout<<"Error";
 	}
 	cout<<itog;
 }
