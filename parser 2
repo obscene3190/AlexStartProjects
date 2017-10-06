@@ -1,0 +1,32 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    int a, b;
+    char znak;
+    cin>>a;
+    cin>>znak;
+    while(znak ) {
+
+        cin>>b;
+        if(znak == '+'){
+            a = a+b;
+        }
+
+        else if(znak == '-'){
+            a = a-b;
+        }
+
+        else if(znak == '*'){
+            a = a*b;
+        }
+
+        else if(znak == '/') if (b==0) {cout << "Hui sosi"; return 0;} else a = a/b;
+    }
+
+    system("pause");
+
+    return 0;
+    }
+}
