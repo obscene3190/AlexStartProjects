@@ -1,1 +1,67 @@
+#include <iostream>
+#include <sstream>
+#include <string>
 
+using namespace std;
+
+static bool stop = false;
+int prior(char znak) {
+	if ((znak == '-') || (znak == '+')) return 1;
+	else if ((znak == '*') || (znak == '/')) return 2;
+	else {
+		stop = true;
+		cout << "Error";
+		exit(0);
+		return 0;
+	}
+}
+int count(int a, char znak, int b) {
+	int res = 0;
+	if (znak == '*') res = a*b;
+	else if (znak == '-')res = a - b;
+	else if (znak == '+') res = a + b;
+	else if (znak == '/') {
+		if (b == 0) cout << "Error";
+		else res = a / b;
+	}
+	else {
+		stop = true;
+		cout << "Error";
+		exit(0);
+		return 0;
+	}
+	return res;
+}
+
+int main()
+{
+	string string;
+	int begin, middle, last, itog = 0;
+	char znak, znak2;
+	getline(cin, string);
+	istringstream stream(string);
+	stream >> begin;
+	stream >> znak;
+	if (!(stream >> middle)) { cout << begin << endl; exit(0); }
+	while (stream >> znak2) {
+		bool lastprior = false;
+		stream >> last;
+		int prior1 = prior(znak), prior2 = prior(znak2);
+		if ((prior1 > prior2) || (prior1 == prior2)) {
+			begin = count(begin, znak, middle);
+			itog = begin;
+			middle = last;
+			znak = znak2;
+		}
+		else if (prior2 > prior1) {
+			middle = count(middle, znak2, last);
+			itog = middle;
+			lastprior = true;
+		}
+		else { stop = true; cout << "Error"; break; }
+		if (!lastprior) itog = count(begin, znak, middle);
+		else itog = count(begin, znak, middle);
+	}
+	if (!(stream >> znak2)) { cout << count(begin, znak, middle) << endl; stop = false; return 0; }
+	if (!stop) cout << itog << endl;
+}
