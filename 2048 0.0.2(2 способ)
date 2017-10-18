@@ -84,30 +84,52 @@ int check(int pole[4][4]) {
 	int l = 0;
 	for (int i = 0; i<4; i++) {
 		for (int j = 0; j<4; j++)
-			if (pole[i][j] == pole[i + 1][j] || pole[i][j] == pole[i][j + 1] || pole[i][j] == 0) {l = 1; break;}
+			if (pole[i][j] == pole[i + 1][j] || pole[i][j] == pole[i][j + 1] || pole[i][j] == 0) {
+				l = 1;
+				break;
+			}
 		if (l == 1) break;
 	}
+
 	if (l != 1) { cout << "No turns left. The End. Your result : " << m << endl; return -1; }
 	return 0;
 }
 
+int ravenstvo(int pole1[4][4], int pole[4][4]) {
+	int res = 1;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++)
+			if (pole1[i][j] != pole[i][j]) return res * 0;
+			else res *= 1;
+	}
+	return 0;
+}
+void zapis(int pole1[4][4], int pole[4][4]) {
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++)
+			pole1[i][j] = pole[i][j];
+	}
+}
+
 int main() {
-	int pole[4][4] = { { 0,0,0,0 },{ 0,0,0,0 },{ 0,0,0,0 },{ 0,0,0,0 } };
+	int pole[4][4] = { { 0,0,0,0 },{ 0,0,0,0 },{ 0,0,0,0 },{ 0,0,0,0 } }, pole1[4][4] = { { 0,0,0,0 },{ 0,0,0,0 },{ 0,0,0,0 },{ 0,0,0,0 } };
 	char znak;
 	srand(time(NULL));
 	add(pole);
 	add(pole);
+	zapis(pole1, pole);
 	printpole(pole);
 	cout << "j - down; k - up; h - left; l - right q - quit" << endl << endl;
 	for (; cin >> znak;) {
 		check(pole);
 		switch (znak) {
-		case 'j': { down(pole); add(pole); printpole(pole); cout << "Your result: " << m << endl; break; }
-		case 'k': { up(pole); add(pole); printpole(pole); cout << "Your result: " << m << endl; break; }
-		case 'l': { right(pole); add(pole); printpole(pole); cout << "Your result: " << m << endl; break; }
-		case'h': { left(pole); add(pole); printpole(pole); cout << "Your result: " << m << endl; break; }
+		case 'j': { down(pole); if (!(ravenstvo(pole1, pole))) { add(pole); } printpole(pole); cout << "Your result: " << m << endl; break; }
+		case 'k': { up(pole); if (!(ravenstvo(pole1, pole))) { add(pole); } printpole(pole); cout << "Your result: " << m << endl; break; }
+		case 'l': { right(pole); if (!(ravenstvo(pole1, pole))) { add(pole); } printpole(pole); cout << "Your result: " << m << endl; break; }
+		case 'h': { left(pole); if (!(ravenstvo(pole1, pole))) { add(pole); }  printpole(pole); cout << "Your result: " << m << endl; break; }
 		case 'q': {cout << "End. Your result: " << m << endl; return -1; }
 		default: { cout << "Incorrect simbol" << endl; break; }
 		}
+		zapis(pole1, pole);
 	}
 }
