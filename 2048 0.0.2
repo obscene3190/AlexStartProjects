@@ -92,6 +92,7 @@ int check(int pole[4][4]) {
 	}
 
 	if (l != 1) { cout << "No turns left. The End. Your result : " << m << endl; return -1; }
+	return 0;
 }
 
 int ravenstvo(int pole1[4][4], int pole[4][4]) {
@@ -101,6 +102,7 @@ int ravenstvo(int pole1[4][4], int pole[4][4]) {
 			if (pole1[i][j] != pole[i][j]) return res * 0;
 			else res *= 1;
 	}
+	return res;
 }
 void zapis(int pole1[4][4], int pole[4][4]) {
 	for (int i = 0; i < 4; i++) {
