@@ -70,12 +70,9 @@ void down(int pole[4][4]) {
 }
       
 int printpole(int pole[4][4]){
-    for (int i = 0; i < 4; i++) {
-
-		for (int j = 0; j < 4; j++) { cout << pole[i][j] << " "; }
-
-		cout << endl;}	
-
+    for (int j = 0; j < 4; j++) { if (pole[i][j] != 0) {cout << pole[i][j] << " ";}
+    else cout << '*' << " "; }
+		cout << endl;}
 }
 
 bool readpole(int matrix[4][4])
