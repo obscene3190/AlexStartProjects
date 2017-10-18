@@ -92,7 +92,6 @@ int check(int pole[4][4]) {
 	}
 
 	if (l != 1) { cout << "No turns left. The End. Your result : " << m << endl; return -1; }
-	return 0;
 }
 
 int ravenstvo(int pole1[4][4], int pole[4][4]) {
@@ -102,7 +101,6 @@ int ravenstvo(int pole1[4][4], int pole[4][4]) {
 			if (pole1[i][j] != pole[i][j]) return res * 0;
 			else res *= 1;
 	}
-	return 0;
 }
 void zapis(int pole1[4][4], int pole[4][4]) {
 	for (int i = 0; i < 4; i++) {
@@ -111,6 +109,9 @@ void zapis(int pole1[4][4], int pole[4][4]) {
 	}
 }
 
+void dlyakrasoti(int pole1[4][4], int pole[4][4]) {
+	if (!(ravenstvo(pole1, pole))) { add(pole); } printpole(pole); cout << "Your result: " << m << endl;
+}
 int main() {
 	int pole[4][4] = { { 0,0,0,0 },{ 0,0,0,0 },{ 0,0,0,0 },{ 0,0,0,0 } }, pole1[4][4] = { { 0,0,0,0 },{ 0,0,0,0 },{ 0,0,0,0 },{ 0,0,0,0 } };
 	char znak;
@@ -123,10 +124,10 @@ int main() {
 	for (; cin >> znak;) {
 		check(pole);
 		switch (znak) {
-		case 'j': { down(pole); if (!(ravenstvo(pole1, pole))) { add(pole); } printpole(pole); cout << "Your result: " << m << endl; break; }
-		case 'k': { up(pole); if (!(ravenstvo(pole1, pole))) { add(pole); } printpole(pole); cout << "Your result: " << m << endl; break; }
-		case 'l': { right(pole); if (!(ravenstvo(pole1, pole))) { add(pole); } printpole(pole); cout << "Your result: " << m << endl; break; }
-		case 'h': { left(pole); if (!(ravenstvo(pole1, pole))) { add(pole); }  printpole(pole); cout << "Your result: " << m << endl; break; }
+		case 'j': { down(pole); dlyakrasoti(pole1, pole); break; }
+		case 'k': { up(pole); dlyakrasoti(pole1, pole); break; }
+		case 'l': { right(pole); dlyakrasoti(pole1, pole); break; }
+		case 'h': { left(pole); dlyakrasoti(pole1, pole); break; }
 		case 'q': {cout << "End. Your result: " << m << endl; return -1; }
 		default: { cout << "Incorrect simbol" << endl; break; }
 		}
