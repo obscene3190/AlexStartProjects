@@ -84,14 +84,11 @@ int check(int pole[4][4]) {
 	int l = 0;
 	for (int i = 0; i<4; i++) {
 		for (int j = 0; j<4; j++)
-			if (pole[i][j] == pole[i + 1][j] || pole[i][j] == pole[i][j + 1] || pole[i][j] == 0) {
-				l = 1;
-				break;
-			}
+			if (pole[i][j] == pole[i + 1][j] || pole[i][j] == pole[i][j + 1] || pole[i][j] == 0) {l = 1; break;}
 		if (l == 1) break;
 	}
-
 	if (l != 1) { cout << "No turns left. The End. Your result : " << m << endl; return -1; }
+	return 0;
 }
 
 int main() {
