@@ -2,54 +2,56 @@
 #include <sstream>
 using namespace std;
 
-float r1 = 0,r2 = 0,i1 = 0,i2 = 0;
 struct complex_t {
     float real;
     float imag;
 };
-void read(complex_t &complex) {
-    char el1, el2, el3;
-    float r, i;
-    cin >> el1 >> r >> el2 >> i >> el3;
-    if ((r == NULL) || (i == NULL)) {cout << "An error has occured while reading input data"; exit(0); }
-    if ((el1 != '(') || (el2 != ',') || (el3 != ')')) {cout << "An error has occured while reading input data"; exit(0); }
-    complex.real = r;
-    complex.imag = i;
+bool read(complex_t &complex) {
+    char char;
+    bool res = true
+    float real, imag;
+    if (cin >> char && char == '(' &&
+    cin >> real &&
+    cin >> char && char == ',' &&
+    cin >> imag &&
+    cin >> char && char == ')') {
+        complex.real = r;
+        complex.imag = i;
+    }
+    else res = false;
+    return res;
 }
 
 void write(complex_t complex) {
     cout << '(' << complex.real << ',' << complex.imag << ')' << endl;
 }
 
-void prisvaivanie(complex_t complex1, complex_t complex2, float &r1, float &r2, float &i1, float &i2) {
-    r1 = complex1.real;
-    r2 = complex2.real;
-    i1 = complex1.imag;
-    i2 = complex2.imag;
-}
-
-void add(complex_t &complex1, complex_t &complex2) {
-    prisvaivanie(complex1, complex2, r1, r2, i1, i2);
-    complex1.real = r1 + r2;
-    complex1.imag = i1 + i2;
+complex_t add(complex_t &cm1, complex_t &cm2) {
+    complex_t complex;
+    complex.real = cm1.real + cm2.real;
+    complex.imag = cm1.imag + cm2.imag;
+    return complex;
 }
 
 void sub(complex_t &complex1, complex_t &complex2) {
-    prisvaivanie(complex1, complex2, r1, r2, i1, i2);
-    complex1.real = r1 - r2;
-    complex1.imag = i1 - i2;
+    complex_t complex;
+    complex.real = cm1.real + cm2.real;
+    complex.imag = cm1.imag + cm2.imag;
+    return complex;
 }
 
 void mul(complex_t &complex1, complex_t &complex2) {
-    prisvaivanie(complex1, complex2, r1, r2, i1, i2);
-    complex1.real = (r1*r2 - i1*i2);
-    complex1.imag = (i1*r2 + r1*i2);
+    pcomplex_t complex;
+    complex.real = cm1.real + cm2.real;
+    complex.imag = cm1.imag + cm2.imag;
+    return complex;
 }
 
 void div(complex_t &complex1, complex_t &complex2) {
-    prisvaivanie(complex1, complex2, r1, r2, i1, i2);
-    complex1.real = (r1*r2 + i1*i2)/(r2*r2 + i2*i2);
-    complex1.imag = (i1*r2 - r1*i2)/(r2*r2 + i2*i2);
+    complex_t complex;
+    complex.real = cm1.real + cm2.real;
+    complex.imag = cm1.imag + cm2.imag;
+    return complex;
 }
 
 int main() {
