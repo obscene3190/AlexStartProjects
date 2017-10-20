@@ -8,11 +8,11 @@ struct complex_t {
     float imag;
 };
 void read(complex_t &complex) {
-    char el;
+    char el1, el2, el3;
     float r, i;
-    cin >> el >> r >> el >> i >> el;
-    if ((r == NULL) || (i == NULL)) {cout << "An error has occured while reading input data"; exit(0);
-    }
+    cin >> el1 >> r >> el2 >> i >> el3;
+    if ((r == NULL) || (i == NULL)) {cout << "An error has occured while reading input data"; exit(0); }
+    if ((el1 != '(') || (el2 != ',') || (el3 != ')')) {cout << "An error has occured while reading input data"; exit(0); }
     complex.real = r;
     complex.imag = i;
 }
