@@ -22,8 +22,8 @@ bool read(istream & stream, complex_t & complex) {
     return res;
 }
 
-void write(complex_t complex) {
-    cout << '(' << complex.real << ',' << complex.imag << ')' << endl;
+bool write(ostream stream, complex_t complex) {
+    return bool(stream << '(' << complex.real << ',' << complex.imag << ')' << endl);
 }
 
 complex_t add(complex_t cm1, complex_t cm2) {
@@ -73,6 +73,6 @@ int main() {
         default : {cout << "Incorrect operation"; 
                     break;}
         }
-        write(itog);
+        write(cout, itog);
     }
-}
+}   
