@@ -6,15 +6,15 @@ struct complex_t {
     float real;
     float imag;
 };
-bool read(complex_t &complex) {
+bool read(istream & stream, complex_t & complex) {
     char ch;
     bool res = true;
     float real, imag;
-    if (cin >> ch && ch == '(' &&
-    cin >> real &&
-    cin >> ch && ch == ',' &&
-    cin >> imag &&
-    cin >> ch && ch == ')') {
+    if (stream >> ch && ch == '(' &&
+    stream >> real &&
+    stream >> ch && ch == ',' &&
+    stream >> imag &&
+    stream>> ch && ch == ')') {
         complex.real = real;
         complex.imag = imag;
     }
@@ -26,28 +26,28 @@ void write(complex_t complex) {
     cout << '(' << complex.real << ',' << complex.imag << ')' << endl;
 }
 
-complex_t add(complex_t &cm1, complex_t &cm2) {
+complex_t add(complex_t cm1, complex_t cm2) {
     complex_t complex;
     complex.real = cm1.real + cm2.real;
     complex.imag = cm1.imag + cm2.imag;
     return complex;
 }
 
-complex_t sub(complex_t &cm1, complex_t &cm2) {
+complex_t sub(complex_t cm1, complex_t cm2) {
     complex_t complex;
     complex.real = cm1.real - cm2.real;
     complex.imag = cm1.imag - cm2.imag;
     return complex;
 }
 
-complex_t mul(complex_t &cm1, complex_t &cm2) {
+complex_t mul(complex_t cm1, complex_t cm2) {
     complex_t complex;
     complex.real = cm1.real * cm2.real - cm1.imag * cm2.imag;
     complex.imag = cm1.imag * cm2.real + cm1.real * cm2.imag;
     return complex;
 }
 
-complex_t div(complex_t &cm1, complex_t &cm2) {
+complex_t div(complex_t cm1, complex_t cm2) {
     complex_t complex;
     complex.real = (cm1.real * cm2.real + cm1.imag * cm2.imag)/(cm2.real * cm2.real + cm2.imag * cm2.imag);
     complex.imag = (cm1.imag * cm2.real - cm1.real * cm2.imag)/(cm2.real * cm2.real + cm2.imag * cm2.imag);
@@ -56,8 +56,11 @@ complex_t div(complex_t &cm1, complex_t &cm2) {
 
 int main() {
     complex_t cm1, cm2, itog;
+    string string;
+    getline(cin, string);
+    istringstream stream(string);
     char op;
-    if(read(cm1) && cin >> op && read(cm2)) {
+    if(read(stream, cm1) && stream >> op && read(stream, cm2)) {
     switch (op) {
         case '+': {itog = add(cm1,cm2);
                     break;};
