@@ -22,7 +22,7 @@ bool read(istream & stream, complex_t & complex) {
     return res;
 }
 
-bool write(ostream stream, complex_t complex) {
+bool write(ostream &stream, complex_t complex) {
     return bool(stream << '(' << complex.real << ',' << complex.imag << ')' << endl);
 }
 
@@ -75,4 +75,4 @@ int main() {
         }
         write(cout, itog);
     }
-}   
+} 
