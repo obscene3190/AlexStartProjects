@@ -7,18 +7,18 @@ struct complex_t {
     float imag;
 };
 bool read(complex_t &complex) {
-    char char;
-    bool res = true
+    char ch;
+    bool res = true;
     float real, imag;
-    if (cin >> char && char == '(' &&
+    if (cin >> ch && ch == '(' &&
     cin >> real &&
-    cin >> char && char == ',' &&
+    cin >> ch && ch == ',' &&
     cin >> imag &&
-    cin >> char && char == ')') {
-        complex.real = r;
-        complex.imag = i;
+    cin >> ch && ch == ')') {
+        complex.real = real;
+        complex.imag = imag;
     }
-    else res = false;
+    else {res = false; cout << "An error has occured while reading input data";}
     return res;
 }
 
@@ -33,38 +33,43 @@ complex_t add(complex_t &cm1, complex_t &cm2) {
     return complex;
 }
 
-void sub(complex_t &complex1, complex_t &complex2) {
+complex_t sub(complex_t &cm1, complex_t &cm2) {
     complex_t complex;
-    complex.real = cm1.real + cm2.real;
-    complex.imag = cm1.imag + cm2.imag;
+    complex.real = cm1.real - cm2.real;
+    complex.imag = cm1.imag - cm2.imag;
     return complex;
 }
 
-void mul(complex_t &complex1, complex_t &complex2) {
-    pcomplex_t complex;
-    complex.real = cm1.real + cm2.real;
-    complex.imag = cm1.imag + cm2.imag;
+complex_t mul(complex_t &cm1, complex_t &cm2) {
+    complex_t complex;
+    complex.real = cm1.real * cm2.real - cm1.imag * cm2.imag;
+    complex.imag = cm1.imag * cm2.real + cm1.real * cm2.imag;
     return complex;
 }
 
-void div(complex_t &complex1, complex_t &complex2) {
+complex_t div(complex_t &cm1, complex_t &cm2) {
     complex_t complex;
-    complex.real = cm1.real + cm2.real;
-    complex.imag = cm1.imag + cm2.imag;
+    complex.real = (cm1.real * cm2.real + cm1.imag * cm2.imag)/(cm2.real * cm2.real + cm2.imag * cm2.imag);
+    complex.imag = (cm1.imag * cm2.real - cm1.real * cm2.imag)/(cm2.real * cm2.real + cm2.imag * cm2.imag);
     return complex;
 }
 
 int main() {
-    complex_t complex1, complex2;
-    char znak;
-    read(complex1);
-    cin >> znak;
-    read(complex2);
-    switch (znak) {
-        case '+': {add(complex1, complex2); write(complex1); break;};
-        case '-': {sub(complex1, complex2); write(complex1); break;};
-        case '*': {mul(complex1, complex2); write(complex1); break;};
-        case '/': {div(complex1, complex2); write(complex1); break;};
-        default : {cout << "Incorrect operation"; break;}
+    complex_t cm1, cm2, itog;
+    char op;
+    if(read(cm1) && cin >> op && read(cm2)) {
+    switch (op) {
+        case '+': {itog = add(cm1,cm2);
+                    break;};
+        case '-': {itog = sub(cm1,cm2);
+                    break;};
+        case '*': {itog = mul(cm1,cm2); 
+                    break;};
+        case '/': {itog = div(cm1,cm2); 
+                    break;};
+        default : {cout << "Incorrect operation"; 
+                    break;}
         }
+        write(itog);
+    }
 }
