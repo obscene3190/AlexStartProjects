@@ -133,11 +133,8 @@ int main() {
 	float ** matrix1 = new float *[rows1];
 	if (read(matrix1, rows1, columns1)) {
 		cin >> op;
-		if (rows1 != columns1 && op == 'T') {
-			switch (op) {
-			case 'T': { Trans(matrix1, rows1, columns1); break; }
-			default: cout << "An error has occured while reading input data";
-			}
+		if (op == 'T') {
+			Trans(matrix1, rows1, columns1);
 		}
 		else if (rows1 == columns1 && (op == '-' || op == '+' || op == '*')) {
 			cin.get();
