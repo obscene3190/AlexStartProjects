@@ -28,7 +28,7 @@ bool read(float **matrix, unsigned int &rows, unsigned int &columns)
 	return result;
 }
 
-float** create(float** matrix,unsigned int rows,unsigned int columns) {
+float** create(float** matrix, unsigned int rows, unsigned int columns) {
 	matrix = new float *[rows];
 	for (unsigned int i = 0; i < rows; ++i) {
 		matrix[i] = new float[columns];
@@ -52,14 +52,14 @@ float ** add(float ** matrix1, float ** matrix2, float ** matrix, unsigned int r
 	for (unsigned int i = 0; i < rows; i++)
 		for (unsigned int j = 0; j < columns; j++)
 			matrix[i][j] = matrix1[i][j] + matrix2[i][j];
-	return matrix;		
+	return matrix;
 }
 
 float ** sub(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows, unsigned int columns) {
 	for (unsigned int i = 0; i < rows; i++)
 		for (unsigned int j = 0; j < columns; j++)
 			matrix[i][j] = matrix1[i][j] - matrix2[i][j];
-	return matrix;		
+	return matrix;
 }
 
 float ** mult(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows, unsigned int columns) {
@@ -70,10 +70,9 @@ float ** mult(float ** matrix1, float ** matrix2, float ** matrix, unsigned int 
 				res += matrix1[i][k] * matrix2[k][j];
 			matrix[i][j] = res;
 		}
-	return matrix;	
+	return matrix;
 }
 
-// метод должен вернуть матрицу а не просто вывести ее в стандартный поток вывода
 float ** Trans(float ** matrix1, float ** matrix, unsigned int rows, unsigned int columns) {
 	for (unsigned int i = 0; i < columns; i++) {
 		matrix[i] = new float[rows];
@@ -84,7 +83,6 @@ float ** Trans(float ** matrix1, float ** matrix, unsigned int rows, unsigned in
 	return matrix;
 }
 
-// метод должен вернуть матрицу а не просто вывести ее в стандартный поток вывода
 float ** Gauss(float ** matrix, float ** matrix1, float ** matrix2, int rows) {
 	float a, b, result;
 	for (int i = 0; i < rows; i++) {
@@ -123,7 +121,7 @@ float ** Gauss(float ** matrix, float ** matrix1, float ** matrix2, int rows) {
 	for (int i = 0; i < rows; i++)
 		for (int j = 0; j < rows; j++)
 			matrix2[i][j] = matrix[i][j];
-	return matrix2;		
+	return matrix2;
 }
 
 // очистка памяти
@@ -135,9 +133,9 @@ int main() {
 	if (read(matrix1, rows1, columns1)) {
 		cin >> op;
 		if (op == 'T') {
-		    matrix = new float *[columns1];
-		    Trans(matrix1, matrix, rows1, columns1);
-			write(cout,matrix,columns1, rows1);
+			matrix = new float *[columns1];
+			Trans(matrix1, matrix, rows1, columns1);
+			write(cout, matrix, columns1, rows1);
 		}
 		else if (rows1 == columns1 && (op == '-' || op == '+' || op == '*')) {
 			cin.get();
