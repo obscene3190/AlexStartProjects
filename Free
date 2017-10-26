@@ -60,8 +60,7 @@ float ** add(float ** matrix1, float ** matrix2, float ** matrix, unsigned int r
 	for (unsigned int i = 0; i < rows; i++)
 		for (unsigned int j = 0; j < columns; j++)
 			matrix[i][j] = matrix1[i][j] + matrix2[i][j];
-	destroy(matrix1, rows);
-	destroy(matrix2, rows);
+	
 	return matrix;
 }
 
@@ -69,8 +68,7 @@ float ** sub(float ** matrix1, float ** matrix2, float ** matrix, unsigned int r
 	for (unsigned int i = 0; i < rows; i++)
 		for (unsigned int j = 0; j < columns; j++)
 			matrix[i][j] = matrix1[i][j] - matrix2[i][j];
-	destroy(matrix1, rows);
-	destroy(matrix2, rows);
+
 	return matrix;
 }
 
@@ -82,8 +80,7 @@ float ** mult(float ** matrix1, float ** matrix2, float ** matrix, unsigned int 
 				res += matrix1[i][k] * matrix2[k][j];
 			matrix[i][j] = res;
 		}
-	destroy(matrix1, rows);
-	destroy(matrix2, rows);
+	
 	return matrix;
 }
 
@@ -94,7 +91,6 @@ float ** Trans(float ** matrix1, float ** matrix, unsigned int rows, unsigned in
 			matrix[i][j] = matrix1[j][i];
 		}
 	}
-	destroy(matrix1, rows);
 	return matrix;
 }
 
@@ -136,7 +132,6 @@ float ** Gauss(float ** matrix, float ** matrix1, float ** matrix2, int rows) {
 	for (int i = 0; i < rows; i++)
 		for (int j = 0; j < rows; j++)
 			matrix2[i][j] = matrix[i][j];
-	destroy(matrix1, rows);
 	destroy(matrix, rows);
 	return matrix2;
 }
@@ -171,6 +166,7 @@ int main() {
 					break; }
 				default: cout << "An error has occured while reading input data";
 				}
+				destroy(matrix2, rows1);
 			}
 			else cout << "An error has occured while reading input data";
 		}
@@ -179,9 +175,11 @@ int main() {
 			matrix = create(matrix, rows1, columns1);
 			float **matrixA = new float *[columns1];
 			Gauss(matrixA, matrix1, matrix, rows1);
+			destroy(matrixA, rows1);
 			write(cout, matrix, rows1, columns1);
 		}
 		else cout << "An error has occured while reading input data";
 	}
 	else cout << "An error has occured while reading input data";
+	destroy(matrix1, rows1);
 }
