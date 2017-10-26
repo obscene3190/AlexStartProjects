@@ -28,7 +28,7 @@ bool read(float **matrix, unsigned int &rows, unsigned int &columns)
 	return result;
 }
 
-float** create(float** matrix, int rows, int columns) {
+float** create(float** matrix, unsigned int rows, unsigned int columns) {
 	matrix = new float *[rows];
 	for (unsigned int i = 0; i < rows; ++i) {
 		matrix[i] = new float[columns];
@@ -55,28 +55,21 @@ void add(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows,
 }
 
 // метод должен вернуть матрицу а не просто вывести ее в стандартный поток вывода
-void sub(float ** matrix1, float ** matrix2, unsigned int rows, unsigned int columns) {
-	cout << endl;
-	for (unsigned int i = 0; i < rows; i++) {
-		for (unsigned int j = 0; j < columns; j++) {
-			cout << matrix1[i][j] - matrix2[i][j] << " ";
-		}
-		cout << endl;
-	}
+void sub(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows, unsigned int columns) {
+	for (unsigned int i = 0; i < rows; i++)
+		for (unsigned int j = 0; j < columns; j++) 
+			matrix[i][j] = matrix1[i][j] + matrix2[i][j];
 }
 
 // метод должен вернуть матрицу а не просто вывести ее в стандартный поток вывода
-void mult(float ** matrix1, float ** matrix2, unsigned int rows, unsigned int columns) {
-	cout << endl;
-	for (unsigned int i = 0; i < rows; i++) {
+void mult(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows, unsigned int columns) {
+	for (unsigned int i = 0; i < rows; i++)
 		for (unsigned int j = 0; j < columns; j++) {
 			float res = 0;
 			for (unsigned int k = 0; k< rows; k++)
 				res += matrix1[i][k] * matrix2[k][j];
-			cout << res << " ";
+				matrix[i][j] = res;
 		}
-		cout << endl;
-	}
 }
 
 // метод должен вернуть матрицу а не просто вывести ее в стандартный поток вывода
@@ -162,9 +155,9 @@ int main() {
 				case '+': { add(matrix1, matrix2, matrix, rows1, columns1);
 					write(cout, matrix, rows1, columns1);
 					break; }
-				case '-': { sub(matrix1, matrix2, rows1, columns1);
+				case '-': { sub(matrix1, matrix2, matrix, rows1, columns1);
 					break; }
-				case '*': { mult(matrix1, matrix2, rows1, columns1);
+				case '*': { mult(matrix1, matrix2, matrix, rows1, columns1);
 					break; }
 				default: cout << "An error has occured while reading input data";
 				}
