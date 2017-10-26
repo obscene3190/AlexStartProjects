@@ -28,7 +28,7 @@ bool read(float **matrix, unsigned int &rows, unsigned int &columns)
 	return result;
 }
 
-float** create(float** matrix, unsigned int rows, unsigned int columns) {
+float** create(float** matrix,unsigned int rows,unsigned int columns) {
 	matrix = new float *[rows];
 	for (unsigned int i = 0; i < rows; ++i) {
 		matrix[i] = new float[columns];
@@ -47,50 +47,45 @@ void write(ostream & stream, float ** elements, unsigned int rows, unsigned int 
 		stream << endl;
 	}
 }
-// метод должен вернуть матрицу а не просто вывести ее в стандартный поток вывода
-void add(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows, unsigned int columns) {
+
+float ** add(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows, unsigned int columns) {
 	for (unsigned int i = 0; i < rows; i++)
 		for (unsigned int j = 0; j < columns; j++)
 			matrix[i][j] = matrix1[i][j] + matrix2[i][j];
+	return matrix;		
 }
 
-// метод должен вернуть матрицу а не просто вывести ее в стандартный поток вывода
-void sub(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows, unsigned int columns) {
+float ** sub(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows, unsigned int columns) {
 	for (unsigned int i = 0; i < rows; i++)
-		for (unsigned int j = 0; j < columns; j++) 
-			matrix[i][j] = matrix1[i][j] + matrix2[i][j];
+		for (unsigned int j = 0; j < columns; j++)
+			matrix[i][j] = matrix1[i][j] - matrix2[i][j];
+	return matrix;		
 }
 
-// метод должен вернуть матрицу а не просто вывести ее в стандартный поток вывода
-void mult(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows, unsigned int columns) {
+float ** mult(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows, unsigned int columns) {
 	for (unsigned int i = 0; i < rows; i++)
 		for (unsigned int j = 0; j < columns; j++) {
 			float res = 0;
 			for (unsigned int k = 0; k< rows; k++)
 				res += matrix1[i][k] * matrix2[k][j];
-				matrix[i][j] = res;
+			matrix[i][j] = res;
 		}
+	return matrix;	
 }
 
 // метод должен вернуть матрицу а не просто вывести ее в стандартный поток вывода
-void Trans(float ** matrix, unsigned int rows, unsigned int columns) {
-	float ** nmatrix = new float *[rows];
+float ** Trans(float ** matrix1, float ** matrix, unsigned int rows, unsigned int columns) {
 	for (unsigned int i = 0; i < columns; i++) {
-		nmatrix[i] = new float[rows];
+		matrix[i] = new float[rows];
 		for (unsigned int j = 0; j < rows; j++) {
-			nmatrix[i][j] = matrix[j][i];
+			matrix[i][j] = matrix1[j][i];
 		}
 	}
-	for (unsigned int i = 0; i < columns; i++) {
-		for (unsigned int j = 0; j < rows; j++) {
-			cout << nmatrix[i][j] << " ";
-		}
-		cout << endl;
-	}
+	return matrix;
 }
 
 // метод должен вернуть матрицу а не просто вывести ее в стандартный поток вывода
-void Gauss(float ** matrix, float ** matrix1, int rows) {
+float ** Gauss(float ** matrix, float ** matrix1, float ** matrix2, int rows) {
 	float a, b, result;
 	for (int i = 0; i < rows; i++) {
 		matrix[i] = new float[rows];
@@ -125,13 +120,10 @@ void Gauss(float ** matrix, float ** matrix1, int rows) {
 			matrix[j][i] = (matrix[j][i] - result) / matrix1[j][j];
 		}
 	}
-	cout << endl;
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < rows; j++) {
-			cout << matrix[i][j] << " ";
-		}
-		cout << endl;
-	}
+	for (int i = 0; i < rows; i++)
+		for (int j = 0; j < rows; j++)
+			matrix2[i][j] = matrix[i][j];
+	return matrix2;		
 }
 
 // очистка памяти
@@ -143,7 +135,9 @@ int main() {
 	if (read(matrix1, rows1, columns1)) {
 		cin >> op;
 		if (op == 'T') {
-			Trans(matrix1, rows1, columns1);
+		    matrix = new float *[columns1];
+		    Trans(matrix1, matrix, rows1, columns1);
+			write(cout,matrix,columns1, rows1);
 		}
 		else if (rows1 == columns1 && (op == '-' || op == '+' || op == '*')) {
 			cin.get();
@@ -156,8 +150,10 @@ int main() {
 					write(cout, matrix, rows1, columns1);
 					break; }
 				case '-': { sub(matrix1, matrix2, matrix, rows1, columns1);
+					write(cout, matrix, rows1, columns1);
 					break; }
 				case '*': { mult(matrix1, matrix2, matrix, rows1, columns1);
+					write(cout, matrix, rows1, columns1);
 					break; }
 				default: cout << "An error has occured while reading input data";
 				}
@@ -165,8 +161,11 @@ int main() {
 			else cout << "An error has occured while reading input data";
 		}
 		else if (rows1 == columns1 && op == 'R') {
-			float **matrix = new float *[columns1];
-			Gauss(matrix, matrix1, rows1);
+			matrix = new float *[rows1];
+			matrix = create(matrix, rows1, columns1);
+			float **matrixA = new float *[columns1];
+			Gauss(matrixA, matrix1, matrix, rows1);
+			write(cout, matrix, rows1, columns1);
 		}
 		else cout << "An error has occured while reading input data";
 	}
