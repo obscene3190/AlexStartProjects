@@ -3,7 +3,7 @@
 
 using namespace std;
 
-bool read(float **matrix, unsigned int &rows, unsigned int &columns)
+bool read(float ** &matrix, unsigned int &rows, unsigned int &columns)
 {
     bool result = true;
     char zap;
@@ -14,7 +14,7 @@ bool read(float **matrix, unsigned int &rows, unsigned int &columns)
         result = true;
     }
     else return false;
-    //matrix = new float *[rows];
+    matrix = new float *[rows];
     for (unsigned int i = 0; i < rows; ++i) {
         matrix[i] = new float[columns];
         getline(cin, string1);
@@ -161,6 +161,8 @@ int main() {
         }
         else if (rows1 == columns1 && (op == '-' || op == '+' || op == '*')) {
             cin.get();
+            //matrix = new float *[rows1];
+            //matrix = create(matrix, rows1, columns1);
             float ** matrix2 = new float *[rows2];
             if (read(matrix2, rows2, columns2) && rows1 == rows2 && columns1 == columns2) {
                 switch (op) {
