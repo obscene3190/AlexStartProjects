@@ -134,16 +134,19 @@ float ** gauss(float ** matrix, float ** matrix1, float ** &matrix2, int rows) {
                 if (matrix1[j][j] == 0) {
                     for (i = 0; i < rows; i++) {
                         delete[] matrix[i];
-                        delete[]matrix;
                     }
+                    delete[]matrix;
                 }
             }
             matrix[j][i] = (matrix[j][i] - result) / matrix1[j][j];
         }
     }
-    for (int i = 0; i < rows; i++)
-        for (int j = 0; j < rows; j++)
+    for (int i = 0; i < rows; i++) {
+        matrix2 = new float *[rows];
+        for (int j = 0; j < rows; j++) {
             matrix2[i][j] = matrix[i][j];
+        }
+    }
     destroy(matrix, rows);
     return matrix2;
 }
@@ -161,8 +164,6 @@ int main() {
         }
         else if (rows1 == columns1 && (op == '-' || op == '+' || op == '*')) {
             cin.get();
-            //matrix = new float *[rows1];
-            //matrix = create(matrix, rows1, columns1);
             float ** matrix2 = new float *[rows2];
             if (read(matrix2, rows2, columns2) && rows1 == rows2 && columns1 == columns2) {
                 switch (op) {
