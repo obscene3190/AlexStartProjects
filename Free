@@ -108,6 +108,7 @@ float ** trans(float ** matrix1, float ** &matrix, unsigned int rows, unsigned i
 float ** gauss(float ** matrix, float ** matrix1, float ** &matrix2, int rows) {
     float a, b, result;
     matrix2 = new float *[rows];
+    //float ** matrix;
     for (int i = 0; i < rows; i++) {
         matrix[i] = new float[rows];
 
@@ -142,9 +143,15 @@ float ** gauss(float ** matrix, float ** matrix1, float ** &matrix2, int rows) {
         }
     }
     for (int i = 0; i < rows; i++) {
-        matrix2 = new float *[rows];
+        matrix2[i] = new float [rows];
         for (int j = 0; j < rows; j++) {
             matrix2[i][j] = matrix[i][j];
+            if (matrix[i][j] == -0) {
+                 matrix2[i][j] = 0;
+            }
+            else {
+                matrix2[i][j] = matrix[i][j];;
+            }
         }
     }
     destroy(matrix, rows);
@@ -183,8 +190,6 @@ int main() {
             else cout << "An error has occured while reading input data";
         }
         else if (rows1 == columns1 && op == 'R') {
-            matrix = new float *[rows1];
-            matrix = create(matrix, rows1, columns1);
             float **matrixA = new float *[columns1];
             gauss(matrixA, matrix1, matrix, rows1);
             destroy(matrixA, rows1);
