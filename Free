@@ -5,181 +5,190 @@ using namespace std;
 
 bool read(float **matrix, unsigned int &rows, unsigned int &columns)
 {
-	bool result = true;
-	char zap;
-	string string, string1;
-	getline(cin, string);
-	istringstream stream(string);
-	if (stream >> rows && stream >> zap && zap == ',' && stream >> columns) {
-		result = true;
-	}
-	else return false;
-	for (unsigned int i = 0; i < rows; ++i) {
-		matrix[i] = new float[columns];
-		getline(cin, string1);
-		istringstream stream(string1);
-		for (unsigned int j = 0; j < columns; j++) {
-			if (!(stream >> matrix[i][j])) {
-				result = false;
-				break;
-			}
-		}
-	}
-	return result;
+    bool result = true;
+    char zap;
+    string string, string1;
+    getline(cin, string);
+    istringstream stream(string);
+    if (stream >> rows && stream >> zap && zap == ',' && stream >> columns) {
+        result = true;
+    }
+    else return false;
+    //matrix = new float *[rows];
+    for (unsigned int i = 0; i < rows; ++i) {
+        matrix[i] = new float[columns];
+        getline(cin, string1);
+        istringstream stream(string1);
+        for (unsigned int j = 0; j < columns; j++) {
+            if (!(stream >> matrix[i][j])) {
+                result = false;
+                break;
+            }
+        }
+    }
+    return result;
 }
 
 void destroy(float ** elements, unsigned int rows)
 {
-	for (unsigned int i = 0; i < rows; ++i) {
-		delete[] elements[i];
-	}
-	delete[] elements;
+    for (unsigned int i = 0; i < rows; ++i) {
+        delete[] elements[i];
+    }
+    delete[] elements;
 }
 
 float** create(float** matrix, unsigned int rows, unsigned int columns) {
-	matrix = new float *[rows];
-	for (unsigned int i = 0; i < rows; ++i) {
-		matrix[i] = new float[columns];
-		for (unsigned int j = 0; j < columns; ++j) {
-			matrix[i][j] = 0.0f;
-		}
-	}
-	return matrix;
+    matrix = new float *[rows];
+    for (unsigned int i = 0; i < rows; ++i) {
+        matrix[i] = new float[columns];
+        for (unsigned int j = 0; j < columns; ++j) {
+            matrix[i][j] = 0.0f;
+        }
+    }
+    return matrix;
 }
 
 void write(ostream & stream, float ** elements, unsigned int rows, unsigned int columns) {
-	stream << endl;
-	for (unsigned int i = 0; i < rows; i++) {
-		for (unsigned int j = 0; j < columns; j++)
-			stream << elements[i][j] << " ";
-		stream << endl;
-	}
+    stream << endl;
+    for (unsigned int i = 0; i < rows; i++) {
+        for (unsigned int j = 0; j < columns; j++)
+            stream << elements[i][j] << " ";
+        stream << endl;
+    }
 }
 
-float ** add(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows, unsigned int columns) {
-	for (unsigned int i = 0; i < rows; i++)
-		for (unsigned int j = 0; j < columns; j++)
-			matrix[i][j] = matrix1[i][j] + matrix2[i][j];
-	
-	return matrix;
+float ** add(float ** matrix1, float ** matrix2, float ** &matrix, unsigned int rows, unsigned int columns) {
+    matrix = new float *[rows];
+    for (unsigned int i = 0; i < rows; i++) {
+        matrix[i] = new float[columns];
+        for (unsigned int j = 0; j < columns; j++) {
+            matrix[i][j] = matrix1[i][j] + matrix2[i][j];
+        }
+    }
+    return matrix;
 }
 
-float ** sub(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows, unsigned int columns) {
-	for (unsigned int i = 0; i < rows; i++)
-		for (unsigned int j = 0; j < columns; j++)
-			matrix[i][j] = matrix1[i][j] - matrix2[i][j];
-
-	return matrix;
+float ** sub(float ** matrix1, float ** matrix2, float ** &matrix, unsigned int rows, unsigned int columns) {
+    matrix = new float *[rows];
+    for (unsigned int i = 0; i < rows; i++){
+        matrix[i] = new float[columns];
+        for (unsigned int j = 0; j < columns; j++) {
+            matrix[i][j] = matrix1[i][j] - matrix2[i][j];
+        }
+    }
+    return matrix;
 }
 
-float ** mult(float ** matrix1, float ** matrix2, float ** matrix, unsigned int rows, unsigned int columns) {
-	for (unsigned int i = 0; i < rows; i++)
-		for (unsigned int j = 0; j < columns; j++) {
-			float res = 0;
-			for (unsigned int k = 0; k< rows; k++)
-				res += matrix1[i][k] * matrix2[k][j];
-			matrix[i][j] = res;
-		}
-	
-	return matrix;
+float ** mult(float ** matrix1, float ** matrix2, float ** &matrix, unsigned int rows, unsigned int columns) {
+    matrix = new float *[rows];
+    for (unsigned int i = 0; i < rows; i++) {
+        matrix[i] = new float[columns];
+        for (unsigned int j = 0; j < columns; j++) {
+            float res = 0.0f;
+            for (unsigned int k = 0; k< rows; k++) {
+                res += matrix1[i][k] * matrix2[k][j];
+                matrix[i][j] = res;
+            }
+        }
+    }
+    return matrix;
 }
 
-float ** Trans(float ** matrix1, float ** matrix, unsigned int rows, unsigned int columns) {
-	for (unsigned int i = 0; i < columns; i++) {
-		matrix[i] = new float[rows];
-		for (unsigned int j = 0; j < rows; j++) {
-			matrix[i][j] = matrix1[j][i];
-		}
-	}
-	return matrix;
+float ** trans(float ** matrix1, float ** &matrix, unsigned int rows, unsigned int columns) {
+    matrix = new float *[columns];
+    for (unsigned int i = 0; i < columns; i++) {
+        matrix[i] = new float[rows];
+        for (unsigned int j = 0; j < rows; j++) {
+            matrix[i][j] = matrix1[j][i];
+        }
+    }
+    return matrix;
 }
 
-float ** Gauss(float ** matrix, float ** matrix1, float ** matrix2, int rows) {
-	float a, b, result;
-	for (int i = 0; i < rows; i++) {
-		matrix[i] = new float[rows];
+float ** gauss(float ** matrix, float ** matrix1, float ** &matrix2, int rows) {
+    float a, b, result;
+    matrix2 = new float *[rows];
+    for (int i = 0; i < rows; i++) {
+        matrix[i] = new float[rows];
 
-		for (int j = 0; j < rows; j++) {
-			matrix[i][j] = 0;
-			matrix[i][i] = 1;
-		}
-	}
-	for (int i = 0; i < rows; i++) {
-		a = matrix1[i][i];
-		for (int j = i + 1; j < rows; j++) {
-			b = matrix1[j][i];
-			for (int k = 0; k < rows; k++) {
-				matrix1[j][k] = matrix1[i][k] * b - matrix1[j][k] * a;
-				matrix[j][k] = matrix[i][k] * b - matrix[j][k] * a;
-			}
-		}
-	}
-	for (int i = 0; i < rows; i++) {
-		for (int j = rows - 1; j > -1; j--) {
-			result = 0;
-			for (int k = rows - 1; k > j; k--) {
-				result += matrix1[j][k] * matrix[k][i];
-				if (matrix1[j][j] == 0) {
-					for (i = 0; i < rows; i++) {
-						delete[] matrix[i];
-						delete[]matrix;
-					}
-				}
-			}
-			matrix[j][i] = (matrix[j][i] - result) / matrix1[j][j];
-		}
-	}
-	for (int i = 0; i < rows; i++)
-		for (int j = 0; j < rows; j++)
-			matrix2[i][j] = matrix[i][j];
-	destroy(matrix, rows);
-	return matrix2;
+        for (int j = 0; j < rows; j++) {
+            matrix[i][j] = 0;
+            matrix[i][i] = 1;
+        }
+    }
+    for (int i = 0; i < rows; i++) {
+        a = matrix1[i][i];
+        for (int j = i + 1; j < rows; j++) {
+            b = matrix1[j][i];
+            for (int k = 0; k < rows; k++) {
+                matrix1[j][k] = matrix1[i][k] * b - matrix1[j][k] * a;
+                matrix[j][k] = matrix[i][k] * b - matrix[j][k] * a;
+            }
+        }
+    }
+    for (int i = 0; i < rows; i++) {
+        for (int j = rows - 1; j > -1; j--) {
+            result = 0;
+            for (int k = rows - 1; k > j; k--) {
+                result += matrix1[j][k] * matrix[k][i];
+                if (matrix1[j][j] == 0) {
+                    for (i = 0; i < rows; i++) {
+                        delete[] matrix[i];
+                        delete[]matrix;
+                    }
+                }
+            }
+            matrix[j][i] = (matrix[j][i] - result) / matrix1[j][j];
+        }
+    }
+    for (int i = 0; i < rows; i++)
+        for (int j = 0; j < rows; j++)
+            matrix2[i][j] = matrix[i][j];
+    destroy(matrix, rows);
+    return matrix2;
 }
 
 int main() {
-	unsigned int rows1 = 0, rows2 = 0, columns1 = 0, columns2 = 0;
-	char op;
-	float ** matrix1 = new float *[rows1];
-	float ** matrix;
-	if (read(matrix1, rows1, columns1)) {
-		cin >> op;
-		if (op == 'T') {
-			matrix = new float *[columns1];
-			Trans(matrix1, matrix, rows1, columns1);
-			write(cout, matrix, columns1, rows1);
-		}
-		else if (rows1 == columns1 && (op == '-' || op == '+' || op == '*')) {
-			cin.get();
-			matrix = new float *[rows1];
-			matrix = create(matrix, rows1, columns1);
-			float ** matrix2 = new float *[rows2];
-			if (read(matrix2, rows2, columns2) && rows1 == rows2 && columns1 == columns2) {
-				switch (op) {
-				case '+': { add(matrix1, matrix2, matrix, rows1, columns1);
-					write(cout, matrix, rows1, columns1);
-					break; }
-				case '-': { sub(matrix1, matrix2, matrix, rows1, columns1);
-					write(cout, matrix, rows1, columns1);
-					break; }
-				case '*': { mult(matrix1, matrix2, matrix, rows1, columns1);
-					write(cout, matrix, rows1, columns1);
-					break; }
-				default: cout << "An error has occured while reading input data";
-				}
-				destroy(matrix2, rows1);
-			}
-			else cout << "An error has occured while reading input data";
-		}
-		else if (rows1 == columns1 && op == 'R') {
-			matrix = new float *[rows1];
-			matrix = create(matrix, rows1, columns1);
-			float **matrixA = new float *[columns1];
-			Gauss(matrixA, matrix1, matrix, rows1);
-			destroy(matrixA, rows1);
-			write(cout, matrix, rows1, columns1);
-		}
-		else cout << "An error has occured while reading input data";
-	}
-	else cout << "An error has occured while reading input data";
-	destroy(matrix1, rows1);
+    unsigned int rows1 = 0, rows2 = 0, columns1 = 0, columns2 = 0;
+    char op;
+    float ** matrix1 = new float *[rows1];
+    float ** matrix;
+    if (read(matrix1, rows1, columns1)) {
+        cin >> op;
+        if (op == 'T') {
+            trans(matrix1, matrix, rows1, columns1);
+            write(cout, matrix, columns1, rows1);
+        }
+        else if (rows1 == columns1 && (op == '-' || op == '+' || op == '*')) {
+            cin.get();
+            float ** matrix2 = new float *[rows2];
+            if (read(matrix2, rows2, columns2) && rows1 == rows2 && columns1 == columns2) {
+                switch (op) {
+                    case '+': { add(matrix1, matrix2, matrix, rows1, columns1);
+                        write(cout, matrix, rows1, columns1);
+                        break; }
+                    case '-': { sub(matrix1, matrix2, matrix, rows1, columns1);
+                        write(cout, matrix, rows1, columns1);
+                        break; }
+                    case '*': { mult(matrix1, matrix2, matrix, rows1, columns1);
+                        write(cout, matrix, rows1, columns1);
+                        break; }
+                    default: cout << "An error has occured while reading input data";
+                }
+                destroy(matrix2, rows1);
+            }
+            else cout << "An error has occured while reading input data";
+        }
+        else if (rows1 == columns1 && op == 'R') {
+            matrix = new float *[rows1];
+            matrix = create(matrix, rows1, columns1);
+            float **matrixA = new float *[columns1];
+            gauss(matrixA, matrix1, matrix, rows1);
+            destroy(matrixA, rows1);
+            write(cout, matrix, rows1, columns1);
+        }
+        else cout << "An error has occured while reading input data";
+    }
+    else cout << "An error has occured while reading input data";
+    destroy(matrix1, rows1);
 }
