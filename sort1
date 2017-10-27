@@ -1,0 +1,60 @@
+#include <iostream>
+#include <utility>
+#include <sstream>
+
+using namespace std;
+
+void selection_sort(double * array, unsigned int size) {
+  unsigned int i, j, k; 
+  double x;
+  for( i=0; i < size; i++) 
+  {  
+    k=i; x=array[i];
+    for( j=i+1; j < size; j++)	
+      if (  array[j] < x ) 
+      {
+        k=j; x=array[j];	        
+      }
+    array[k] = array[i]; array[i] = x;   
+  }
+}
+
+bool read (istream & stream, double* &array, unsigned int &size) {
+    bool res = true;
+    for (unsigned int i=0; i < size; i++) {
+        if (!(stream >> array[i])) {
+            res = false;
+            break;
+        }
+    }
+    return res;
+}
+
+void write(ostream & stream,double* array, unsigned int size) {
+    for (unsigned int i = 0; i < size; i++) {
+         stream << array[i] << ' ';
+    }
+}
+
+int main() {
+    unsigned int size;
+    double* array;
+    if(cin >> size) {}
+    else  {
+        cout << "An error has occured while reading numbers from line";
+        return 1;
+    }
+    cin.get();
+    string string;
+    getline(cin, string);
+    istringstream stream(string);
+    array = new double [size];
+    if( read(stream,array, size)) {
+        selection_sort (array, size);
+        write (cout, array, size);
+    }
+    else {
+        cout << "An error has occured while reading numbers from line";
+    }
+    delete array;
+}
