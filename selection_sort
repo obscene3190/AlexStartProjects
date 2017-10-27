@@ -4,14 +4,18 @@
 
 using namespace std;
 
-void selection_sort (double* array, unsigned int size) {
-    for (unsigned int i = 0; i < size; i++) {
-        for (unsigned j = i+1; j < size; j++) {
-            if (array[i] > array[j]) {
-                swap(array[i], array[j]);
-            }
-        }
-    }
+void selection_sort(double * & array, unsigned int size) {
+	for (int i = 0; i < size - 1; i++) {
+		int min = i;
+		for (int j = i + 1; j < size; j++) {
+			if (array[j] < array[i]) {
+				min = j;
+			}
+		}		
+		if (array[i] > array[min]) {
+			swap(array[i], array[min]);
+		}
+	}
 }
 
 bool read (istream & stream, double* &array, unsigned int &size) {
