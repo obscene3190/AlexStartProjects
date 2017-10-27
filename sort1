@@ -39,11 +39,10 @@ void write(ostream & stream,double* array, unsigned int size) {
 int main() {
     unsigned int size;
     double* array;
-    if(cin >> size) {}
-    else  {
+    if(!(cin >> size)) {
         cout << "An error has occured while reading numbers from line";
         return 1;
-    }
+        }
     cin.get();
     string string;
     getline(cin, string);
@@ -56,5 +55,5 @@ int main() {
     else {
         cout << "An error has occured while reading numbers from line";
     }
-    delete array;
+    delete[] array;
 }
