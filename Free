@@ -51,8 +51,14 @@ float** create(float** matrix, unsigned int rows, unsigned int columns) {
 void write(ostream & stream, float ** elements, unsigned int rows, unsigned int columns) {
     stream << endl;
     for (unsigned int i = 0; i < rows; i++) {
-        for (unsigned int j = 0; j < columns; j++)
-            stream << elements[i][j] << " ";
+        for (unsigned int j = 0; j < columns; j++) {
+            if(elements[i][j] == -0) {
+                stream << 0 << " ";
+            }
+            else {
+                stream << elements[i][j] << " ";
+            }
+        }
         stream << endl;
     }
 }
