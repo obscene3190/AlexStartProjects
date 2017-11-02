@@ -8,23 +8,23 @@ char checkwin(char pole[3][3]) {
 	char winresult;
 	for (int i = 0; i < 3; i++) {
 		int j = 0;
-		if (pole[i][j] == pole[i][j + 1] == pole[i][j + 2]) {
-			if (pole[i][j] = 'X') return winresult = pole[i][j];
-			else if (pole[i][j] = 'O') return winresult = pole[i][j];
+		if (pole[i][j] == pole[i][j + 1] && pole[i][j + 1] == pole[i][j + 2]) {
+			if (pole[i][j] == 'X') return winresult = pole[i][j];
+			else if (pole[i][j] == 'O') return winresult = pole[i][j];
 			else continue;
 		}
 	}
 	for (int j = 0; j < 3; j++) {
 		int i = 0;
-		if (pole[i][j] == pole[i + 1][j] == pole[i + 2][j]) {
-			if (pole[i][j] = 'X') return winresult = pole[i][j];
-			else if (pole[i][j] = 'O') return winresult = pole[i][j];
+		if (pole[i][j] == pole[i + 1][j] && pole[i + 1][j] == pole[i + 2][j]) {
+			if (pole[i][j] == 'X') return winresult = pole[i][j];
+			else if (pole[i][j] == 'O') return winresult = pole[i][j];
 			else continue;
 		}
 	}
-	if (pole[0][0] == pole[1][1] == pole[2][2] || pole[0][2] == pole[1][1] == pole[2][0]) {
-		if (pole[1][1] = 'X') return winresult = pole[1][1];
-		else if (pole[1][1] = 'O') return winresult = pole[1][1];
+	if ((pole[0][0] == pole[1][1] && pole[1][1] == pole[2][2]) || (pole[0][2] == pole[1][1] && pole[1][1] == pole[2][0])) {
+		if (pole[1][1] == 'X') return winresult = pole[1][1];
+		else if (pole[1][1] =='O') return winresult = pole[1][1];
 	}
 	int res = 1;
 	for (int i = 0; i < 3; i++) {
@@ -33,28 +33,34 @@ char checkwin(char pole[3][3]) {
 			else res = 0; break;
 		}
 	}
-	if (res = 0) return 'N';
+	if (res == 0) return 'N';
 	else return 'Y';
 }
 
-char wheretoput(char pole[3][3], char turn) {
+void wheretoput(char pole[3][3], char turn) {
 	int count = 1;
+	int l[9], c[9];
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
-			if (pole[i][j] = '_') {
+			if (pole[i][j] == '_') {
 				char k;
 				int n;
-				if (i == 1) k = 'a';
-				if (i == 2) k = 'b';
-				if (i == 3) k = 'c';
+				if (i == 0) k = 'a';
+				if (i == 1) k = 'b';
+				if (i == 2) k = 'c';
 				if (j == 0) n = 1;
 				if (j == 1) n = 2;
 				if (j == 2) n = 3;
-				cout << count << '.' << " mark cell " << k << n << "as" << turn;
+				cout << count << '.' << " mark cell " << k << n << " as " << turn << endl;
+				l[count] = i;
+				c[count] = j;
 				count++;
 			}
 		}
 	}
+	cout << endl;
+	cin >> count;
+	pole[l[count]][c[count]] = 'X';
 }
 
 void write(char pole[3][3]) {
@@ -67,12 +73,27 @@ void write(char pole[3][3]) {
 }
 int main()
 {
-	char pole[3][3];
+	char pole[3][3], turn;
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			pole[i][j] = '_';
 		}
 	}
+	turn = 'X';
 	write(pole);
+	for( ; 1; ) {
+	switch (checkwin(pole)) { 
+	    case 'O' : {cout << "O won. Congrat" << endl;
+	                exit(0);}
+	    case 'X' : {cout << "X won. Congrat" << endl;
+	                exit(0);}
+	    case 'N' : {cout << "Draw. Congrat" << endl;
+	                exit(0);}
+	    case 'Y' : { break;}
+	}    
+	wheretoput(pole, turn);
+	if (turn == 'X') turn = 'O';
+	if (turn == 'O') turn = 'X';
+	}
+	
 }
-
