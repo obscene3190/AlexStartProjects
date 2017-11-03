@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void selection_sort(double * array, unsigned int size) {
+void insertion_sort(double * array, unsigned int size) {
     unsigned int i, j;
     for (i = 1; i <  size; i++) {
         j = i;
@@ -13,6 +13,13 @@ void selection_sort(double * array, unsigned int size) {
              j = j - 1;
         }
     }
+    /* Либо через for:
+    for (i = 1; i <  size; i++) {
+        for (j = i; j > 0 && array[j] < array[j - 1]; j--) {
+             swap (array[j], array[j - 1]);
+        }
+    } */
+    
 }
 
 
@@ -46,10 +53,11 @@ int main() {
     istringstream stream(string);
     array = new double [size];
     if( read(stream,array, size)) {
-        selection_sort (array, size);
+        insertion_sort (array, size);
         write (cout, array, size);
     }
     else {
         cout << "An error has occured while reading numbers from line";
     }
     delete[] array;
+}
