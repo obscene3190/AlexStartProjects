@@ -8,7 +8,7 @@ void selection_sort(double * array, unsigned int size) {
     unsigned int i, j;
     for (i = 1; i <  size; i++) {
         j = i;
-        while (j > 0 and array[j] < array[j - 1]) {
+        while (j > 0 && array[j] < array[j - 1]) {
              swap (array[j], array[j - 1]);
              j = j - 1;
         }
