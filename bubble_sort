@@ -6,14 +6,17 @@ using namespace std;
 
 void bubble_sort(double * array, unsigned int size) {
   unsigned int i, j;
-  for( i=0; i < size; i++)
-  {
-    for( j=i+1; j < size; j++)
-      if (  array[j] < array[i] )
+  bool sorted = false;
+  while(!sorted) {
+  sorted = true
+    for( i=0; i < size; i++)
+    { 
+      if (  array[i+1] < array[i] )
       {
-          swap(array[j],array[i]);
+          swap(array[i+1],array[i]);
+          sorted = false;
       }
-  }
+    }
 }
 
 bool read (istream & stream, double* &array, unsigned int &size) {
