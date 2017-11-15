@@ -1,0 +1,153 @@
+#include <iostream>
+#include <sstream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+/*
+КРЕСТИКИ-НОЛИКИ. 5x5
+Переделанная версия 3 на 3.
+*/
+
+//Метод, "сканирующий" игровое поле на победу, проверяя все варинаты победных комбинаций. 
+//Возвращает значение типа char D(draw, ничья), C(continue, продолжить), Х(победа Х) и О(победа О).
+char checkwin(char pole[5][5]) {
+	char winresult;
+	for (int i = 0; i < 5; i++) {
+		int j = 0;
+		if (pole[i][j] == pole[i][j + 1] &&
+			pole[i][j + 1] == pole[i][j + 2] &&
+			pole[i][j + 2] == pole[i][j + 3] &&
+			pole[i][j + 3] == pole[i][j + 4]) {
+			if (pole[i][j] == 'X') return winresult = pole[i][j];
+			else if (pole[i][j] == 'O') return winresult = pole[i][j];
+			else continue;
+		}
+	}
+	for (int j = 0; j < 5; j++) {
+		int i = 0;
+		if (pole[i][j] == pole[i + 1][j] &&
+			pole[i + 1][j] == pole[i + 2][j] &&
+			pole[i + 2][j] == pole[i + 3][j] &&
+			pole[i + 3][j] == pole[i + 4][j]) {
+			if (pole[i][j] == 'X') return winresult = pole[i][j];
+			else if (pole[i][j] == 'O') return winresult = pole[i][j];
+			else continue;
+		}
+	}
+	if ((pole[0][0] == pole[1][1] &&
+		pole[1][1] == pole[2][2] &&
+		pole[2][2] == pole[3][3] &&
+		pole[3][3] == pole[4][4]) ||
+		(pole[0][4] == pole[1][3] &&
+		pole[1][3] == pole[2][2] &&
+		pole[2][2] == pole[3][1] &&
+		pole[3][1] == pole[4][0])) {
+		if (pole[2][2] == 'X') return winresult = pole[2][2];
+		else if (pole[2][2] == 'O') return winresult = pole[2][2];
+	}
+	int res = 1;
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			if (pole[i][j] != '_') { res *= 1; }
+			else if (pole[i][j] == '_') { res = 0; break; }
+		}
+	}
+	if (res == 1) return 'D';
+	else return 'C';
+}
+
+//Метод wheretoput определяет и выводит доступные ходы. 
+//Далее пользователь должен ввести команду и, в зависимости от команды, выполняется действие.
+void wheretoput(char pole[5][5], char turn) {
+	int count = 1;
+	int l[25], c[25];
+	/* В чем смысл? В общих чертах: каждая команда имеет свой номер, за которым стоит еще два номера i и J, строка и столбец соотвественно,
+	таким образом, допустимые действия можно представить в виде таблицы. Пример:
+	1) 1 2 3 4
+	2) 1 2 2 3
+	3) 2 1 3 1 ,
+	Где в первой строке кол-во допустимых действий, вторая и третья строка позиция заменяемого элемента. В данном случае, выполняя первую команду,
+	пользователь заменит элемент [1][2], вторую [2][1] и так далее.
+	Х или О задается входной переменной turn.
+	*/
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			if (pole[i][j] == '_') {
+				char k;
+				int n;
+				if (i == 0) k = 'a';
+				if (i == 1) k = 'b';
+				if (i == 2) k = 'c';
+				if (i == 3) k = 'd';
+				if (i == 4) k = 'e';
+				if (j == 0) n = 1;
+				if (j == 1) n = 2;
+				if (j == 2) n = 3;
+				if (j == 3) n = 4;
+				if (j == 4) n = 5;
+				cout << count << '.' << "	mark cell " << k << n << " as " << turn << endl;
+				l[count] = i;
+				c[count] = j;
+				count++;
+			}
+		}
+	}
+	cout << count << '.' << "	quit" << endl; // добавления команды выхода.
+	int ex = count;
+	string string;
+	getline(cin, string);
+	istringstream stream(string);
+	stream >> count; // Пользователь вводит номер команды, до тех пор, пока он не будет введен правильно, программа будет предлагать ввести номер снова и снова. 
+	while (count < 1 || count > ex) {
+		cout << "Repeat input" << endl;
+		getline(cin, string);
+		istringstream stream1(string);
+		stream1 >> count;
+		if (count == ex) {
+			cout << "Quit" << endl;
+			exit(0);
+		}
+	}
+	pole[l[count]][c[count]] = turn; // выполение этого действия происходит после успешного завершения цикла. Непосредственно сам ход.
+
+}
+
+// Метод вывода игрового поля.
+void write(char pole[5][5]) {
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			cout << pole[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+int main()
+{
+	char pole[5][5], turn; // переменая turn задает порядок игры, Х или О.
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 5; j++) {
+			pole[i][j] = '_';
+		}
+	}
+	turn = 'X'; // первыми ходят Х.
+	write(pole);
+	for (; 1; ) {
+		wheretoput(pole, turn);
+		write(pole);
+		switch (checkwin(pole)) // в засимости от возвращаемого проверкой значения, выполняются определенные действия.
+		{
+		case 'O': {cout << "O won. Congrat" << endl;
+			exit(0); }
+		case 'X': {cout << "X won. Congrat" << endl;
+			exit(0); }
+		case 'D': {cout << "Draw. Congrat" << endl;
+			exit(0); }
+		case 'C': {}
+		}
+		if (turn == 'X') turn = 'O';
+		else if (turn == 'O') turn = 'X'; // данное условие меняет очередность хода: если ходили X, то следующие ходят О.
+	}
+
+}
