@@ -45,7 +45,7 @@ int main() {
     if(!(cin >> size)) {
         cout << "An error has occured while reading numbers from line";
         return 1;
-        }
+    }
     cin.get();
     string string;
     getline(cin, string);
