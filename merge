@@ -14,15 +14,15 @@ void merge(double *array, int l, int r) {
     double *tmp = new double[r];
     int i = l;
     int j = mid + 1;
-    for(int step=0; step<r-l+1; step++) {
-  	    if((j>r) || ((i<=mid) && (array[i]<array[j]))) {
-  		    tmp[step]=array[i];
+    for(int step = 0; step < r - l + 1; step++) {
+  	    if((j>r) || ((i <= mid) && (array[i] < array[j]))) {
+  		    tmp[step] = array[i];
   		    i++;
 	    }
-        else {
-    	    tmp[step]=array[j];
-    	    j++;
-	}
+            else {
+    	    	tmp[step] = array[j];
+    	    	j++;
+	    }
     }
     for (int step = 0; step < r - l + 1; step++) {
         array[l + step] = tmp[step];
