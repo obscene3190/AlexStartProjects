@@ -1,0 +1,63 @@
+#include <iostream>
+#include <sstream>
+#include <utility>
+
+using namespace std;
+
+void merge(double *array, int l int r) {
+    int mid = (l + r) / 2;
+    double *doparray = new double[r]; 
+    if (l==r) return;
+    merge(array, l, mid);
+    merge(array, mid + 1, r);
+    for(int step=0;step<r-l+1;step++) {
+  	    if((j>r) || ((i<=mid) && (array[i]<array[j]))) {
+  		    tmp[step]=array[i];
+  		    i++;
+	    }
+        else{
+    	    tmp[step]=array[j];
+    	    j++;
+	    }
+    }
+    
+}
+
+bool read (istream & stream, double* &array, unsigned int &size) {
+    bool res = true;
+    for (unsigned int i=0; i < size; i++) {
+        if (!(stream >> array[i])) {
+            res = false;
+            break;
+        }
+    }
+    return res;
+}
+
+void write(ostream & stream,double* array, unsigned int size) {
+    for (unsigned int i = 0; i < size; i++) {
+         stream << array[i] << ' ';
+    }
+}
+
+int main() {
+    unsigned int size;
+    double* array;
+    if(!(cin >> size)) {
+        cout << "An error has occured while reading numbers from line";
+        return 1;
+    }
+    cin.get();
+    string string;
+    getline(cin, string);
+    istringstream stream(string);
+    array = new double [size];
+    if( read(stream,array, size)) {
+        quick(array, 0, size-1);
+        write (cout, array, size);
+    }
+    else {
+        cout << "An error has occured while reading numbers from line";
+    }
+    delete[] array;
+}
