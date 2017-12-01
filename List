@@ -4,13 +4,9 @@
 using namespace std;
 
 struct node_t {
-  int value;
-  node_t * next;
+    int value;
+    node_t * next;
 };
-
-void init(node_t * list) {
-    
-}
 
 void add(node_t * & head, int value) {
     node_t * node = new node_t;
@@ -28,27 +24,58 @@ void add(node_t * & head, int value) {
     }
 }
 
-void minus(node_t * list, int value) {
-        
+void away(node_t * & list) {
+    node_t * first = list;
+    list = list->next;
+    delete first;
 }
 
 void reverse(node_t * list) {
-        
+    node_t ;
 }
 
 void print(node_t * list) {
     while (list)
     {
-        cout << list->value;
+        cout << list->value << "    ";
         list = list->next;
-    }    
-} 
+    }
+    cout << endl;
+}
+ void delet(node_t * head) {
+    while(head) {
+        delete head;
+        head = head->next;
+    }
+}
 int main()
 {
+    int value;
+    char op;
     node_t * head = nullptr;
-    
-    //print(head);
-    add(head,6);
-    print(head);
-    
+    while(cin >> op) {
+        switch (op) {
+            case '+' : {
+                cin >> value;
+                add(head, value);
+                print(head);
+                break;
+            };
+            case '-' : {
+                away(head);
+                print(head);
+                break;
+            };
+            case 'q' : {
+                exit(0);
+            };
+            case '=' : {
+                print(head);
+                break;
+            };
+            case '/' : {break;
+            };
+        }
+    }
+    delet(head);
 }
