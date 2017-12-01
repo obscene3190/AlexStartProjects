@@ -1,0 +1,54 @@
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct node_t {
+  int value;
+  node_t * next;
+};
+
+void init(node_t * list) {
+    
+}
+
+void add(node_t * & head, int value) {
+    node_t * node = new node_t;
+    node->value = value;
+    node->next = nullptr;
+    if( head == nullptr) {
+        head = node;
+    }
+    else {
+        node_t * last = head;
+        while(last->next) {
+            last = last->next;
+        }
+        last->next = node;
+    }
+}
+
+void minus(node_t * list, int value) {
+        
+}
+
+void reverse(node_t * list) {
+        
+}
+
+void print(node_t * list) {
+    while (list)
+    {
+        cout << list->value;
+        list = list->next;
+    }    
+} 
+int main()
+{
+    node_t * head = nullptr;
+    
+    //print(head);
+    add(head,6);
+    print(head);
+    
+}
