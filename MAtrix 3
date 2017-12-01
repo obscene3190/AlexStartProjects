@@ -16,7 +16,7 @@ float** create(float** &matrix, unsigned int rows, unsigned int columns) {
     return matrix;
 }
 
-bool read(float ** &matrix, unsigned int &rows, unsigned int &columns)
+/*bool read(float ** &matrix, unsigned int &rows, unsigned int &columns)
 {
     bool result = true;
     char zap;
@@ -41,7 +41,7 @@ bool read(float ** &matrix, unsigned int &rows, unsigned int &columns)
     }
     return result;
 }
-
+*/
 
 void destroy(float ** elements, unsigned int rows)
 {
